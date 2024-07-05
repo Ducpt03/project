@@ -1,0 +1,19 @@
+{% extends "data_user/base.html" %}
+{% block title %}Gen Key{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if user.is_keygen %}
+            <label for="">Public Key</label>
+            <textarea name="" id="">{{key.public_key}}</textarea>
+            <label for="">Private Key</label>
+            <textarea name="" id="">{{key.private_key}}</textarea>
+    {% else %}
+        <form action="" method="post">
+            <p>You haven't have key</p>
+            <p>Do you want to generate key?</p>
+            <button type="submit">Request</button>
+        </form>
+    {% endif %}
+    </div>
+{% endblock %}

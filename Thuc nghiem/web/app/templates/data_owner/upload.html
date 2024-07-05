@@ -1,0 +1,73 @@
+{% extends "data_owner/base.html" %}
+{% block title %}Upload{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Data Owner Dashboard</h2>
+    <form action="{{ url_for('owner.upload') }}" method="POST" id="uploadForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        
+        <label for="file">Upload File:</label>
+        <input type="file" id="file" name="file" required onchange="handleFileSelect(event)">
+
+        <label for="file_name">File Name:</label>
+        <input type="text" id="file_name" name="file_name" required>
+
+        <label for="secret">Secret:</label>
+        <input type="text" name="secret" id="secret" required>
+
+        <label for="indexs">Indexs:</label>
+        <input type="text" name="indexs" id="indexs" required>
+        
+        <label for="file_content">File Content:</label>
+        <textarea name="file_content" id="file_content" rows="5" cols="100" readonly></textarea>
+        
+        <button type="submit">Upload</button>
+    </form>
+</div>
+<script>
+    function handleFileSelect(event) {
+        const fileInput = event.target;
+        const file = fileInput.files[0];
+        
+        if (file) {
+            // Tự động điền trường file_name
+            document.getElementById('file_name').value = file.name;
+            
+            // Đọc nội dung tệp và chuyển đổi sang Base64
+        
+            const reader = new FileReader();
+            reader.readAsText(file);
+            reader.onload = function(e) {
+                document.getElementById('file_content').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    // Ngăn chặn submit form thông thường và xử lý gửi dữ liệu bằng AJAX (nếu cần)
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        formData.delete('file')
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Xử lý kết quả từ server ở đây
+            console.log(data);
+            alert('Upload successful!');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Upload failed!');
+        });
+    });
+</script>
+
+{% endblock %}

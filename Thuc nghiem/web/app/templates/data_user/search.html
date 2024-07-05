@@ -1,0 +1,47 @@
+{% extends "data_user/base.html" %}
+{% block title %}Query{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Query</h2>
+    <form action="{{ url_for('user.query') }}" method="POST" id="uploadForm">
+
+        <label for="key_word">Key Word:</label>
+        <input type="text" id="key_word" name="key_word" required>
+        
+        <label for="owner_student_id">Owner Student ID:</label>
+        <input type="text" id="owner_student_id" name="owner_student_id" required>
+        
+        <label for="secret">Secret Password:</label>
+        <input type="text" name="secret" id="secret" required>
+        
+        <button type="submit">Query</button>
+    </form>
+</div>
+<div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>File ID</th>
+                    <th>Title</th>
+                    <th>File name</th>
+                    <th>Content</th>
+                    <th>Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if files %}
+                    {% for file in files %}
+                    <tr>
+                        <td>{{ file.file_id }}</td>
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.title }}</td>
+                        <td>{{ file.content }}</td>
+                        <td>{{ file.owner }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+</div>
+{% endblock %}

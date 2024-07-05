@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}View User{% endblock %}
+
+{% block content %}
+    <h1>User Key</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student ID</th>
+                <th>Public key</th>
+                <th>Private key</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.student_id }}</td>
+                {% if user.is_keygen %}
+                    <td>{{user.public_key}}</td>
+                    <td>{{user.private_key}}</td>
+                {% else %}
+                    <td>User haven't gen key</td>
+                    <td>User haven't gen key</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

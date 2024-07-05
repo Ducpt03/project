@@ -1,0 +1,30 @@
+{% extends "data_owner/base.html" %}
+{% block title %}View Document{% endblock %}
+
+{% block content %}
+<h1>View File</h1>
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>File ID</th>
+                <th>Key</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if files %}
+                {% for file in files %}
+                <tr>
+                    <td>{{ file.id }}</td>
+                    <td>{{ file.file_id }}</td>
+                    <td>{{ file.sym }}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
